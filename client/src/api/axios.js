@@ -34,6 +34,23 @@ instance.interceptors.request.use((config) => {
   return config;
 });
 
+// Optionally handle 401s without nuking local auth immediately
+let didWarnAuth = false;
+instance.interceptors.response.use(
+  (res) => res,
+  (error) => {
+    const status = error?.response?.status;
+    if (status === 401) {
+      // Do not auto-logout. Let protected routes gate access.
+      if (!didWarnAuth && typeof window !== 'undefined') {
+        didWarnAuth = true;
+        setTimeout(() => { didWarnAuth = false; }, 5000);
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default instance;
 
 // Media base URL (for images under /uploads) derived from API base

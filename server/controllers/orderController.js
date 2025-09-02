@@ -11,7 +11,9 @@ exports.createOrder = async (req, res) => {
 
     // Fetch product details and compute total
   const productIds = items.map((i) => i.productId);
-  const products = await Product.find({ _id: { $in: productIds } }).populate('sellerId', 'email name');
+  const products = await Product.find({ _id: { $in: productIds } })
+    .populate('hostId', 'email name')
+    .populate('sellerId', 'email name');
 
     const orderItems = items.map((i) => {
       const p = products.find((pp) => String(pp._id) === String(i.productId));
@@ -22,7 +24,7 @@ exports.createOrder = async (req, res) => {
         amount: p.amount,
         quantity: i.quantity || 1,
         imageUrl: p.imageUrl,
-        sellerId: p.sellerId?._id,
+  sellerId: p.sellerId?._id, // legacy
       };
     }).filter(Boolean);
 
@@ -36,7 +38,7 @@ exports.createOrder = async (req, res) => {
     const total = orderItems.reduce((sum, it) => sum + toNum(it.amount) * (it.quantity || 1), 0);
 
     const order = new Order({
-      customerId: req.user._id,
+  customerId: req.user._id, // legacy
       items: orderItems,
       total,
       shipping,
@@ -52,7 +54,7 @@ exports.createOrder = async (req, res) => {
         for (const it of orderItems) {
           const updated = await Product.findOneAndUpdate(
             { _id: it.product, isSold: { $ne: true } },
-            { $set: { isSold: true, soldAt: new Date(), buyerId: req.user._id } },
+            { $set: { isSold: true, soldAt: new Date(), buyerId: req.user._id, adopterId: req.user._id } },
             { new: true, session }
           );
           if (!updated) {
@@ -88,7 +90,7 @@ exports.createOrder = async (req, res) => {
 
 exports.getMyOrders = async (req, res) => {
   try {
-    const orders = await Order.find({ customerId: req.user._id }).sort({ createdAt: -1 });
+  const orders = await Order.find({ customerId: req.user._id }).sort({ createdAt: -1 });
     res.json(orders);
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
@@ -97,7 +99,7 @@ exports.getMyOrders = async (req, res) => {
 
 exports.getOrderById = async (req, res) => {
   try {
-    const order = await Order.findOne({ _id: req.params.id, customerId: req.user._id });
+  const order = await Order.findOne({ _id: req.params.id, customerId: req.user._id });
     if (!order) return res.status(404).json({ message: 'Not found' });
     res.json(order);
   } catch (err) {
@@ -145,7 +147,7 @@ exports.cancelOrder = async (req, res) => {
         for (const it of order.items || []) {
           await Product.updateOne(
             { _id: it.product, buyerId: order.customerId },
-            { $set: { isSold: false, soldAt: null, buyerId: null } },
+            { $set: { isSold: false, soldAt: null, buyerId: null, adopterId: null } },
             { session }
           );
         }

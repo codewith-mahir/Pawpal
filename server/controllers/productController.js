@@ -13,7 +13,8 @@ exports.addProduct = async (req, res) => {
   const aiRes = await ai.categorize({ name, description, imagePath: imageUrl });
 
     const product = new Product({
-      sellerId: req.user._id,
+      hostId: req.user._id,
+      sellerId: req.user._id, // legacy
       name,
       description,
       amount,
@@ -32,7 +33,7 @@ exports.addProduct = async (req, res) => {
 
 exports.getMyProducts = async (req, res) => {
   try {
-    const products = await Product.find({ sellerId: req.user._id });
+  const products = await Product.find({ $or: [ { hostId: req.user._id }, { sellerId: req.user._id } ] });
     res.json(products);
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
@@ -55,8 +56,9 @@ exports.getAllProducts = async (req, res) => {
       filter.isSold = { $ne: true };
     }
     const products = await Product.find(filter)
-      .populate('sellerId', 'name email')  // Populate seller name & email
-      .select('name description amount imageUrl sellerId category isSold'); // include sellerId for frontend
+      .populate('hostId', 'name email')
+      .populate('sellerId', 'name email')  // legacy
+      .select('name description amount imageUrl hostId sellerId category isSold');
 
     res.json(products);
   } catch (err) {
@@ -80,8 +82,9 @@ exports.getProductById = async (req, res) => {
       { $inc: { viewCount: 1 } },
       { new: true }
     )
+      .populate('hostId', 'name email')
       .populate('sellerId', 'name email')
-      .select('name description amount imageUrl sellerId category isSold viewCount aiCategory breed');
+      .select('name description amount imageUrl hostId sellerId category isSold viewCount aiCategory breed');
     if (!p) return res.status(404).json({ message: 'Not found' });
     res.json(p);
   } catch (err) {

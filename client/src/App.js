@@ -26,7 +26,7 @@ function PrivateRoute({ children, roles }) {
   if (loading) return null; // or a spinner
   if (!user) return <Navigate to="/login" />;
   const role = user.role === 'seller' ? 'host' : (user.role === 'customer' ? 'adopter' : user.role);
-  if (roles && !roles.includes(role)) return <Navigate to="/login" />;
+  if (roles && !roles.includes(role)) return <Navigate to="/products" />;
   return children;
 }
 
@@ -103,7 +103,7 @@ function App() {
           }
         />
         
-        <Route path="*" element={<Navigate to="/login" />} />
+  <Route path="*" element={<Navigate to="/products" />} />
     </Routes>
   </Container>
       </CartProvider>
