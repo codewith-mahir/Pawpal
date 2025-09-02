@@ -177,7 +177,8 @@ export default function AdminDashboard() {
                     <CardContent>
                       <Typography variant="subtitle1">{u.name} <Typography component="span" variant="body2" color="text.secondary">({u.email})</Typography></Typography>
                       <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
-                        <Chip label={`Role: ${u.role}`} size="small" />
+        <Chip label={`Role: ${u.role === 'seller' ? 'host' : (u.role === 'customer' ? 'adopter' : u.role)}`}
+          size="small" />
                         <Chip label={u.isBlocked ? 'Blocked' : 'Active'} color={u.isBlocked ? 'error' : 'success'} size="small" />
                         <Chip label={u.isApproved === false ? 'Unapproved' : 'Approved'} color={u.isApproved === false ? 'warning' : 'primary'} size="small" />
                       </Stack>
@@ -227,7 +228,7 @@ export default function AdminDashboard() {
                         <Chip label={`Breed: ${p.breed || 'N/A'}`} size="small" />
                         <Chip label={`Views: ${p.viewCount || 0}`} size="small" />
                       </Stack>
-                      <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1 }}>Seller: {p.sellerId?.name || 'Unknown'}</Typography>
+                      <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1 }}>Host/Rescuer: {p.sellerId?.name || 'Unknown'}</Typography>
                     </CardContent>
                     <CardActions>
                       <Button size="small" color="error" onClick={() => deleteProduct(p._id)}>Delete</Button>

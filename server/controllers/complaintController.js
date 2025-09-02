@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 exports.submitComplaint = async (req, res) => {
   try {
   const { message, productId, orderId } = req.body;
-    // Only sellers and customers can submit complaints (no admins)
+  // Only hosts/rescuers and adopters can submit complaints (no admins)
     if (req.user.role === 'admin') {
       return res.status(403).json({ message: 'Admins cannot submit complaints.' });
     }

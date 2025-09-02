@@ -5,7 +5,8 @@ const UserSchema = new mongoose.Schema({
   email: { type: String, unique: true, required: true },
   previousEmail: { type: String },
   password: { type: String, required: true },
-  role: { type: String, enum: ['customer', 'seller', 'admin'], default: 'customer' },
+  // Support new roles (adopter, host) and keep old ones (customer, seller) for backward compatibility
+  role: { type: String, enum: ['adopter', 'host', 'admin', 'customer', 'seller'], default: 'adopter' },
   isBlocked: { type: Boolean, default: false },
   isApproved: { type: Boolean, default: true }, // admins can require approval for adopters
 }, { timestamps: true });

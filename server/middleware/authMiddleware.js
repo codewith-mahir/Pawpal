@@ -12,6 +12,9 @@ module.exports = async function(req, res, next) {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
   req.user = await User.findById(decoded.id);
     if (!req.user) return res.status(401).json({ message: 'Invalid token user.' });
+    // Normalize legacy roles to new scheme without mutating DB
+    if (req.user.role === 'customer') req.user.role = 'adopter';
+    if (req.user.role === 'seller') req.user.role = 'host';
     if (req.user.isBlocked) return res.status(403).json({ message: 'Account blocked.' });
   if (req.user.role !== 'admin' && req.user.isApproved === false) {
       return res.status(403).json({ message: 'Account disabled (not approved).' });

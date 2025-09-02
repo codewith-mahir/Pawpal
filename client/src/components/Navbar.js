@@ -39,13 +39,14 @@ export default function Navbar() {
   const cartCount = items.reduce((sum, it) => sum + (it.quantity || 1), 0);
   const isActive = (path) => location.pathname.startsWith(path);
 
-  const canDonate = user && (user.role === 'seller' || user.role === 'customer');
+  const normalizedRole = user?.role === 'seller' ? 'host' : (user?.role === 'customer' ? 'adopter' : user?.role);
+  const canDonate = user && (normalizedRole === 'host' || normalizedRole === 'adopter');
   const links = [
     { label: 'Products', to: '/products', show: true },
     { label: 'Orders', to: '/orders', show: true },
     { label: 'Donate', to: '/donate', show: canDonate },
     { label: 'Donations', to: '/donations', show: canDonate },
-    { label: 'Seller', to: '/seller', show: user?.role === 'seller' },
+  { label: 'Host/Rescuer', to: '/seller', show: normalizedRole === 'host' },
     { label: 'Admin', to: '/admin', show: user?.role === 'admin' },
     { label: 'Support', to: '/complaint', show: canDonate },
   ];

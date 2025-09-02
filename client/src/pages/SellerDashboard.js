@@ -127,7 +127,7 @@ export default function SellerDashboard() {
   return (
     <Container maxWidth="md" sx={{ my: 2 }}>
       <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ mb: 1.5 }}>
-        <Typography variant="h6">Seller Dashboard</Typography>
+  <Typography variant="h6">Host/Rescuer Dashboard</Typography>
         <Stack direction="row" spacing={1}>
           <Chip icon={<PetsIcon />} label={`Listings: ${totalListings}`} size="small" />
           <Chip color="success" label={`Sold: ${totalSold}`} size="small" />

@@ -25,7 +25,8 @@ function PrivateRoute({ children, roles }) {
   const { user, loading } = useAuth();
   if (loading) return null; // or a spinner
   if (!user) return <Navigate to="/login" />;
-  if (roles && !roles.includes(user.role)) return <Navigate to="/login" />;
+  const role = user.role === 'seller' ? 'host' : (user.role === 'customer' ? 'adopter' : user.role);
+  if (roles && !roles.includes(role)) return <Navigate to="/login" />;
   return children;
 }
 
@@ -42,7 +43,7 @@ function App() {
         <Route
           path="/seller"
           element={
-            <PrivateRoute roles={['seller']}>
+              <PrivateRoute roles={['host']}>
               <SellerDashboard />
             </PrivateRoute>
           }
@@ -61,7 +62,7 @@ function App() {
   <Route
     path="/complaint"
     element={
-      <PrivateRoute roles={['customer','seller']}>
+            <PrivateRoute roles={['customer','adopter']}>
         <ComplaintForm />
       </PrivateRoute>
     }
@@ -69,7 +70,7 @@ function App() {
   <Route
     path="/donate"
     element={
-      <PrivateRoute roles={['customer','seller']}>
+            <PrivateRoute roles={['customer','adopter']}>
         <Donate />
       </PrivateRoute>
     }
@@ -77,7 +78,7 @@ function App() {
   <Route
     path="/donations"
     element={
-      <PrivateRoute roles={['customer','seller','admin']}>
+            <PrivateRoute roles={['customer','adopter','admin']}>
         <DonationHistory />
       </PrivateRoute>
     }
@@ -88,7 +89,7 @@ function App() {
         <Route
           path="/profile"
           element={
-            <PrivateRoute roles={['customer','seller','admin']}>
+              <PrivateRoute roles={['customer','adopter','admin']}>
               <ProfilePage />
             </PrivateRoute>
           }
@@ -96,7 +97,7 @@ function App() {
         <Route
           path="/orders"
           element={
-            <PrivateRoute roles={['customer','seller','admin']}>
+              <PrivateRoute roles={['customer','adopter','admin']}>
               <MyOrders />
             </PrivateRoute>
           }

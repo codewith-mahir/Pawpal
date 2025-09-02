@@ -28,12 +28,13 @@ export default function Login() {
       login({ ...res.data.user, token: res.data.token });
   toast.success(`Welcome back, ${res.data.user.name || res.data.user.email}!`);
 
-      if (res.data.user.role === 'seller') {
+      const role = res.data.user.role === 'seller' ? 'host' : (res.data.user.role === 'customer' ? 'adopter' : res.data.user.role);
+      if (role === 'host') {
         navigate('/seller');
       } else if (res.data.user.role === 'admin') {
         navigate('/admin');
       } else {
-        // Redirect customers to the products page
+        // Redirect adopters to the products page
         navigate('/products');
       }
     } catch (err) {

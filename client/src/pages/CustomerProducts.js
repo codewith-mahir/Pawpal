@@ -146,7 +146,7 @@ export default function CustomerProducts() {
                   Category: {p.category || 'General'}
                 </Typography>
                 <Typography variant="caption" color="text.secondary" sx={{ display: 'block', fontSize: 11 }}>
-                  Seller: {p.sellerId?.name || 'Unknown'}
+                  Host/Rescuer: {p.sellerId?.name || 'Unknown'}
                 </Typography>
               </CardContent>
               <CardActions sx={{ pt: 0, p: 1, flexWrap: 'wrap', gap: 0.5 }}>

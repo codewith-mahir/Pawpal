@@ -87,7 +87,7 @@ export default function ProductDetail() {
             )}
             <Typography variant="h6" sx={{ mt: 1 }}>Amount: {p.amount} Taka</Typography>
             <Box sx={{ mt: 2 }}>
-              <Typography variant="subtitle2">Seller</Typography>
+              <Typography variant="subtitle2">Host/Rescuer</Typography>
               <Typography variant="body2">{p.sellerId?.name || 'Unknown'} ({p.sellerId?.email || 'N/A'})</Typography>
             </Box>
             <Box sx={{ mt: 3 }}>
