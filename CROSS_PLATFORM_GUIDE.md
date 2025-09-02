@@ -1,8 +1,8 @@
-# PetAdopt - Cross-Platform Compatibility Guide 🌐
+# Pawpal - Cross-Platform Compatibility Guide 🌐
 
 ## MacBook Compatibility ✅
 
-**Your PetAdopt website is 100% compatible with MacBook!** Here's everything you need to know:
+**Your Pawpal website is 100% compatible with MacBook!** Here's everything you need to know:
 
 ## Why It Works on MacBook
 
@@ -107,7 +107,7 @@ The same `.env` configuration works on both Windows and macOS:
 PORT=5000
 MONGODB_URI=mongodb+srv://...
 JWT_SECRET=123456abcdef
-ADMIN_EMAIL=admin@petshop.com
+ADMIN_EMAIL=admin@pawpal.com
 ADMIN_PASSWORD=admin123
 ```
 
@@ -248,7 +248,7 @@ npm run test:firefox
 
 ## Conclusion
 
-Your PetAdopt website is **fully optimized for MacBook** and provides an excellent user experience across all macOS browsers. The website leverages modern web standards and includes specific optimizations for Apple's ecosystem.
+Your Pawpal website is **fully optimized for MacBook** and provides an excellent user experience across all macOS browsers. The website leverages modern web standards and includes specific optimizations for Apple's ecosystem.
 
 **Need Help?** Check the troubleshooting section or create an issue in the repository.
 

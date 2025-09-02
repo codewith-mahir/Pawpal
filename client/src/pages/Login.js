@@ -281,7 +281,7 @@ export default function Login() {
             Find Your Perfect Pet
           </Typography>
           <Typography variant="h5" sx={{ opacity: 0.9, maxWidth: 500, fontSize: { md: 20, lg: 24 }, lineHeight: 1.4 }}>
-            Connect with loving pets looking for their forever homes. Join thousands of happy families who found their companions through PetAdopt.
+            Connect with loving pets looking for their forever homes. Join thousands of happy families who found their companions through Pawpal.
           </Typography>
         </Box>
       </Box>

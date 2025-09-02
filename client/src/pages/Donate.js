@@ -244,7 +244,7 @@ export default function Donate() {
                     label={
                       <Box>
                         <Typography variant="body1" fontWeight={500}>
-                          💝 Donate to PetAdopt Website
+                          💝 Donate to Pawpal Website
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                           Support our platform to help more pets find loving homes

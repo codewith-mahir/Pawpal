@@ -10,7 +10,7 @@ export default function Logo({ size = 28, withText = false, textSize = 18, sx, t
         height={size}
         viewBox="0 0 64 64"
         xmlns="http://www.w3.org/2000/svg"
-        aria-label="PetAdopt logo"
+  aria-label="Pawpal logo"
       >
         <defs>
           <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
@@ -31,7 +31,7 @@ export default function Logo({ size = 28, withText = false, textSize = 18, sx, t
           component="span"
           sx={{ fontWeight: 700, letterSpacing: 0.2, lineHeight: 1, fontSize: { xs: Math.max(12, textSize - 2), sm: textSize }, ...textSx }}
         >
-          PetAdopt
+          Pawpal
         </Typography>
       )}
     </Box>

@@ -337,7 +337,7 @@ export default function AdminDashboard() {
               <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap' }}>
                 {Object.entries(
                   donations.reduce((m,d)=>{
-                    const key = d.isWebsiteDonation ? 'PetAdopt Website' : (d.selectedNgo || d.ngoId?.name || 'Unknown NGO');
+                    const key = d.isWebsiteDonation ? 'Pawpal Website' : (d.selectedNgo || d.ngoId?.name || 'Unknown NGO');
                     const count = d.isWebsiteDonation ? 1 : (Array.isArray(d.items) ? d.items.length : 1);
                     m[key] = m[key] ? { donations: m[key].donations + 1, items: m[key].items + count } : { donations: 1, items: count };
                     return m;

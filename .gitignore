@@ -6,6 +6,7 @@ node_modules/
 # Build outputs
 /dist/
 /build/
+/client/build/
 /.tmp/
 /.temp/
 /.cache/
@@ -17,6 +18,7 @@ node_modules/
 .env
 .env.*
 !.env.example
+server/.env
 
 # Logs
 logs/

@@ -1,4 +1,4 @@
-# PetAdopt - MacBook Setup Guide
+# Pawpal - MacBook Setup Guide
 
 ## Prerequisites for MacBook Development
 
@@ -160,4 +160,4 @@ nvm use 18
 ✅ **Notifications** - Browser notifications supported
 ✅ **Offline Capabilities** - Service workers function properly
 
-Your PetAdopt website is fully optimized for MacBook usage! 🚀
+Your Pawpal website is fully optimized for MacBook usage! 🚀
