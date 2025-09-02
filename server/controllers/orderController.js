@@ -24,7 +24,8 @@ exports.createOrder = async (req, res) => {
         amount: p.amount,
         quantity: i.quantity || 1,
         imageUrl: p.imageUrl,
-  sellerId: p.sellerId?._id, // legacy
+        sellerId: p.sellerId?._id, // legacy
+        hostId: p.hostId?._id,
       };
     }).filter(Boolean);
 
@@ -38,7 +39,8 @@ exports.createOrder = async (req, res) => {
     const total = orderItems.reduce((sum, it) => sum + toNum(it.amount) * (it.quantity || 1), 0);
 
     const order = new Order({
-  customerId: req.user._id, // legacy
+      customerId: req.user._id, // legacy
+      adopterId: req.user._id,
       items: orderItems,
       total,
       shipping,

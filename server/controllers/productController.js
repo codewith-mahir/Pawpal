@@ -14,14 +14,14 @@ exports.addProduct = async (req, res) => {
 
     const product = new Product({
       hostId: req.user._id,
-      sellerId: req.user._id, // legacy
+      sellerId: req.user._id, // legacy mirror
       name,
       description,
       amount,
       imageUrl,
-  category: category || aiRes.category || 'General',
-  aiCategory: aiRes.category,
-  breed: aiRes.breed,
+      category: category || aiRes.category || 'General',
+      aiCategory: aiRes.category,
+      breed: aiRes.breed,
     });
 
     await product.save();
@@ -77,7 +77,7 @@ exports.getCategories = async (_req, res) => {
 
 exports.getProductById = async (req, res) => {
   try {
-    const p = await Product.findByIdAndUpdate(
+  const p = await Product.findByIdAndUpdate(
       req.params.id,
       { $inc: { viewCount: 1 } },
       { new: true }

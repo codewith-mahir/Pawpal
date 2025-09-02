@@ -44,6 +44,7 @@ exports.getAllProducts = async (req, res) => {
     }
     const total = await Product.countDocuments(filter);
     const products = await Product.find(filter)
+      .populate('hostId', 'name email')
       .populate('sellerId', 'name email')
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
@@ -181,7 +182,7 @@ exports.deleteUser = async (req, res) => {
 
   try {
     await User.findByIdAndDelete(userId);
-    await Product.deleteMany({ sellerId: userId }); // optional: delete user's products too
+  await Product.deleteMany({ $or: [ { sellerId: userId }, { hostId: userId } ] }); // optional: delete user's products too
     res.json({ message: 'User and their products deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
@@ -200,18 +201,20 @@ exports.deleteProduct = async (req, res) => {
   }
 };
 
-// Admin: add a new product/pet, optionally for a given sellerId
+// Admin: add a new product/pet, optionally for a given sellerId (legacy) or hostId
 exports.adminAddProduct = async (req, res) => {
   if (req.user.role !== 'admin') return res.status(403).json({ message: 'Forbidden' });
   try {
-    const { name, description, amount, category, sellerId } = req.body;
+    const { name, description, amount, category, sellerId, hostId } = req.body;
     const imageUrl = req.file ? req.file.path : null;
     if (!name || !amount) return res.status(400).json({ message: 'Name and amount are required' });
 
-    const owner = sellerId ? await User.findById(sellerId) : req.user;
-    if (!owner) return res.status(400).json({ message: 'Invalid sellerId' });
+  const ownerId = hostId || sellerId;
+  const owner = ownerId ? await User.findById(ownerId) : req.user;
+  if (!owner) return res.status(400).json({ message: 'Invalid host/seller id' });
 
     const product = new Product({
+      hostId: owner._id,
       sellerId: owner._id,
       name,
       description,
