@@ -56,7 +56,7 @@ export default function MyOrders() {
           <Typography variant="body2">Total: {Number(o.total || 0).toFixed(2)}</Typography>
           {Array.isArray(o.items) && o.items.length > 0 && (
             <Box sx={{ mt: 1 }}>
-              <Typography variant="subtitle2">Products</Typography>
+              <Typography variant="subtitle2">Pets</Typography>
               {o.items.map((it, idx) => (
                 <Box key={idx} sx={{ display: 'flex', alignItems: 'center', gap: 1, my: 0.5 }}>
                   {it.imageUrl && (

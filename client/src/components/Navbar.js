@@ -42,7 +42,7 @@ export default function Navbar() {
   const normalizedRole = user?.role === 'seller' ? 'host' : (user?.role === 'customer' ? 'adopter' : user?.role);
   const canDonate = user && (normalizedRole === 'host' || normalizedRole === 'adopter');
   const links = [
-    { label: 'Products', to: '/products', show: true },
+    { label: 'Pets', to: '/products', show: true },
     { label: 'Orders', to: '/orders', show: true },
     { label: 'Donate', to: '/donate', show: canDonate },
     { label: 'Donations', to: '/donations', show: canDonate },

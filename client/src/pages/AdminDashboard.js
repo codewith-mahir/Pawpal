@@ -36,7 +36,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     if (activeTab === 'users') fetchUsers();
-    if (activeTab === 'products') fetchProducts();
+  if (activeTab === 'products') fetchProducts();
     if (activeTab === 'complaints') fetchComplaints();
     if (activeTab === 'analytics') fetchAnalytics();
   if (activeTab === 'donations') fetchDonations();
@@ -53,7 +53,7 @@ export default function AdminDashboard() {
     try { setLoading(true); setError('');
       const res = await axios.get('/admin/products', { params: { page: page.products, limit, q: search.products } });
       setProducts(res.data.data); setTotal((t)=> ({...t, products: res.data.total}));
-    } catch (e) { setError('Failed to load products'); }
+  } catch (e) { setError('Failed to load pets'); }
     finally { setLoading(false); }
   }
   async function fetchComplaints() {
@@ -90,7 +90,7 @@ export default function AdminDashboard() {
   }
 
   async function deleteUser(id) {
-    if (!window.confirm('Are you sure you want to delete this user? This will remove their products too.')) return;
+  if (!window.confirm('Are you sure you want to delete this user? This will remove their pets too.')) return;
     try {
       await axios.delete(`/admin/user/${id}`);
       toast.success('User deleted');
@@ -121,13 +121,13 @@ export default function AdminDashboard() {
   }
 
   async function deleteProduct(id) {
-    if (!window.confirm('Are you sure you want to delete this product?')) return;
+    if (!window.confirm('Are you sure you want to delete this pet?')) return;
     try {
       await axios.delete(`/admin/product/${id}`);
-      alert('Product deleted');
+  alert('Pet deleted');
   fetchUsers();
     } catch (err) {
-      alert('Failed to delete product');
+  alert('Failed to delete pet');
     }
   }
 
@@ -142,7 +142,7 @@ export default function AdminDashboard() {
         variant="scrollable"
       >
         <Tab value="users" label="Users" />
-        <Tab value="products" label="Products" />
+  <Tab value="products" label="Pets" />
         <Tab value="complaints" label="Complaints" />
   <Tab value="donations" label="Donations" />
         <Tab value="analytics" label="Analytics" />
@@ -210,7 +210,7 @@ export default function AdminDashboard() {
 
       {activeTab === 'products' && (
         <>
-          <Typography variant="h6" sx={{ mb: 1 }}>Products</Typography>
+          <Typography variant="h6" sx={{ mb: 1 }}>Pets</Typography>
           {loading ? (
             <Grid container spacing={2}>{Array.from({length:8}).map((_,i)=> (
               <Grid item xs={12} md={6} key={i}><Card><CardContent><Skeleton height={28} width="60%" /><Skeleton height={20} width="80%" /></CardContent></Card></Grid>
@@ -257,7 +257,7 @@ export default function AdminDashboard() {
                     <CardContent>
                       <Typography variant="body2" sx={{ mb: 1 }}>From: {c.userId?.name || 'Unknown'} ({c.userId?.email || 'No email'})</Typography>
                       <Stack direction="row" spacing={1} sx={{ mb: 1 }}>
-                        {c.productId && <Chip label={`Product: ${c.productId?.name || c.productId}`} size="small" />}
+                        {c.productId && <Chip label={`Pet: ${c.productId?.name || c.productId}`} size="small" />}
                         {c.orderId && <Chip label={`Order: ${c.orderId?._id || c.orderId}`} size="small" />}
                         <Chip label={`Status: ${c.status || 'open'}`} size="small" />
                       </Stack>
@@ -290,7 +290,7 @@ export default function AdminDashboard() {
               <Grid item xs={12} md={6}>
                 <Card>
                   <CardContent>
-                    <Typography variant="subtitle1" sx={{ mb: 1 }}>Most Sold Breeds</Typography>
+                    <Typography variant="subtitle1" sx={{ mb: 1 }}>Most Adopted Breeds</Typography>
                     {(analytics.mostSoldBreed || []).map((b) => (
                       <Typography key={b.breed} variant="body2">{b.breed} — {b.count}</Typography>
                     ))}

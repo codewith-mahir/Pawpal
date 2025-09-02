@@ -26,19 +26,19 @@ export function CartProvider({ children }) {
       // Check latest availability from backend
       const res = await api.get(`/products/${product._id}`);
       const fresh = res.data;
-      if (fresh.isSold) return; // silently ignore
-      // Prevent seller from adding their own product
+  if (fresh.isSold) return; // silently ignore (already adopted)
+  // Prevent host from adding their own pet
       const sellerId = typeof fresh.sellerId === 'string' ? fresh.sellerId : fresh.sellerId?._id;
       const currentUserId = user?._id;
       if (sellerId && currentUserId && String(sellerId) === String(currentUserId)) {
-        toast.error("You can't add your own product");
+  toast.error("You can't add your own pet");
         return;
       }
       // If already in cart, do nothing (1 product per user)
       const exists = items.some((i) => i._id === product._id);
       if (exists) return;
       persist([...items, { ...fresh, quantity: 1 }]);
-      toast.success('Product added to cart succesfully');
+  toast.success('Pet added to cart successfully');
     } catch (_) {
       // ignore add if product not found/unavailable
     }

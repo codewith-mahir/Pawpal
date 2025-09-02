@@ -130,16 +130,16 @@ export default function SellerDashboard() {
   <Typography variant="h6">Host/Rescuer Dashboard</Typography>
         <Stack direction="row" spacing={1}>
           <Chip icon={<PetsIcon />} label={`Listings: ${totalListings}`} size="small" />
-          <Chip color="success" label={`Sold: ${totalSold}`} size="small" />
+          <Chip color="success" label={`Adopted: ${totalSold}`} size="small" />
         </Stack>
       </Stack>
 
       <Grid container spacing={2}>
-        {/* Add Product Form */}
+  {/* Add Pet Form */}
     <Grid item xs={12} md={5}>
           <Card>
             <CardContent>
-      <Typography variant="subtitle1" sx={{ mb: 1 }}>Add Product</Typography>
+  <Typography variant="subtitle1" sx={{ mb: 1 }}>Add Pet</Typography>
               <Box component="form" onSubmit={handleSubmit} encType="multipart/form-data">
                 <Stack spacing={1.5}>
                   <TextField label="Name" value={name} onChange={(e)=> setName(e.target.value)} required size="small" />
@@ -164,16 +164,16 @@ export default function SellerDashboard() {
                     )}
                   </Stack>
                   {error && <Typography color="error" variant="body2">{error}</Typography>}
-                  <Button type="submit" variant="contained" disabled={submitting}>{submitting ? 'Adding...' : 'Add Product'}</Button>
+                  <Button type="submit" variant="contained" disabled={submitting}>{submitting ? 'Adding...' : 'Add Pet'}</Button>
                 </Stack>
               </Box>
             </CardContent>
           </Card>
         </Grid>
 
-        {/* My Products */}
+  {/* My Pets */}
         <Grid item xs={12} md={7}>
-          <Typography variant="subtitle1" sx={{ mb: 1 }}>My Products</Typography>
+          <Typography variant="subtitle1" sx={{ mb: 1 }}>My Pets</Typography>
           {loading ? (
             <Grid container spacing={2}>{Array.from({length:6}).map((_,i)=> (
               <Grid item xs={12} sm={6} key={i}><Card><CardContent><Skeleton variant="rectangular" height={140} sx={{ mb:1 }} /><Skeleton height={24} width="70%" /><Skeleton height={18} width="50%" /></CardContent></Card></Grid>
@@ -192,7 +192,7 @@ export default function SellerDashboard() {
                       <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap' }}>
                         <Chip label={`${p.amount} Taka`} size="small" color="primary" variant="outlined" />
                         {p.category && <Chip label={p.category} size="small" />}
-                        {p.isSold && <Chip label="Sold" color="success" size="small" />}
+                        {p.isSold && <Chip label="Adopted" color="success" size="small" />}
                         {typeof p.viewCount === 'number' && <Chip label={`Views: ${p.viewCount}`} size="small" variant="outlined" />}
                       </Stack>
                     </CardContent>
@@ -205,7 +205,7 @@ export default function SellerDashboard() {
               {products.length === 0 && (
                 <Grid item xs={12}>
                   <Paper sx={{ p:2, textAlign: 'center' }}>
-                    <Typography variant="body2">You have no products yet. Add your first listing using the form.</Typography>
+                    <Typography variant="body2">You have no pets yet. Add your first listing using the form.</Typography>
                   </Paper>
                 </Grid>
               )}

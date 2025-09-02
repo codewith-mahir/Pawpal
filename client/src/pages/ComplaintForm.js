@@ -47,7 +47,7 @@ export default function ComplaintForm() {
               <TextField label="Message" multiline minRows={3} fullWidth value={message} onChange={(e)=> setMessage(e.target.value)} required />
             </Grid>
             <Grid item xs={12} md={6}>
-              <TextField label="Product ID (optional)" fullWidth value={productId} onChange={(e)=> setProductId(e.target.value)} />
+              <TextField label="Pet ID (optional)" fullWidth value={productId} onChange={(e)=> setProductId(e.target.value)} />
             </Grid>
             <Grid item xs={12} md={6}>
               <TextField label="Order ID (optional)" fullWidth value={orderId} onChange={(e)=> setOrderId(e.target.value)} />

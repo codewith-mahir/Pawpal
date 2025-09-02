@@ -72,13 +72,13 @@ export default function CustomerProducts() {
       <Hero
         title="Adopt a Friend"
         subtitle="Every pet deserves a loving home. Explore our listings and find your perfect match."
-        ctaText="Browse Pets"
-        ctaTo="/products"
+  ctaText="Browse Pets"
+  ctaTo="/products"
         imageUrl="/images/pet-adoptions-banner.png"
         minHeight={160}
       />
       
-  <Typography variant="h6" sx={{ mb: 1.5, fontWeight: 700, fontSize: 20 }}>Available Products</Typography>
+  <Typography variant="h6" sx={{ mb: 1.5, fontWeight: 700, fontSize: 20 }}>Available Pets</Typography>
   <Box sx={{ mb: 2, display: 'flex', gap: 1.5, alignItems: 'center', flexDirection: { xs: 'column', sm: 'row' } }}>
         <FormControl sx={{ minWidth: { xs: '100%', sm: 160 }, width: { xs: '100%', sm: 'auto' } }}>
           <InputLabel id="cat-label">Category</InputLabel>
@@ -115,9 +115,9 @@ export default function CustomerProducts() {
         </Grid>
       )}
 
-      {!loading && products.length === 0 && (
+    {!loading && products.length === 0 && (
         <Box sx={{ textAlign: 'center', color: 'text.secondary', py: 4 }}>
-          <Typography>No products match your filters.</Typography>
+      <Typography>No pets match your filters.</Typography>
         </Box>
       )}
 
@@ -152,7 +152,7 @@ export default function CustomerProducts() {
               <CardActions sx={{ pt: 0, p: 1, flexWrap: 'wrap', gap: 0.5 }}>
                 <Button size="small" sx={{ fontSize: 11, px: 1 }} onClick={() => navigate('/product', { state: { product: p } })}>View Details</Button>
                 {p.isSold ? (
-                  <Typography color="error" sx={{ ml: 0.5, fontWeight: 700, fontSize: 11 }}>SOLD</Typography>
+                  <Typography color="error" sx={{ ml: 0.5, fontWeight: 700, fontSize: 11 }}>ADOPTED</Typography>
                 ) : (
                   <Button
                     size="small"
@@ -161,7 +161,7 @@ export default function CustomerProducts() {
                     onClick={() => {
                       const sellerId = typeof p.sellerId === 'string' ? p.sellerId : p.sellerId?._id;
                       if (sellerId && user?._id && String(sellerId) === String(user._id)) {
-                        toast.error("You can't add your own product");
+                        toast.error("You can't add your own pet");
                         return;
                       }
                       add(p, 1);

@@ -31,7 +31,7 @@ export default function ProductDetail() {
         setP(res.data);
         setError('');
       } catch (e) {
-        setError('Failed to load product');
+  setError('Failed to load pet');
       } finally {
         setLoading(false);
       }
@@ -48,12 +48,12 @@ export default function ProductDetail() {
       </Container>
     );
   }
-  if (!p) return <Container maxWidth="md" sx={{ mt: 2 }}><Typography>Product not found.</Typography></Container>;
+  if (!p) return <Container maxWidth="md" sx={{ mt: 2 }}><Typography>Pet not found.</Typography></Container>;
 
   const addToCart = () => {
     const sellerId = typeof p.sellerId === 'string' ? p.sellerId : p.sellerId?._id;
     if (sellerId && user?._id && String(sellerId) === String(user._id)) {
-      toast.error("You can't add your own product");
+  toast.error("You can't add your own pet");
       return;
     }
     add(p, 1);
@@ -92,7 +92,7 @@ export default function ProductDetail() {
             </Box>
             <Box sx={{ mt: 3 }}>
               {p.isSold ? (
-                <Typography color="error" fontWeight={700}>SOLD</Typography>
+                <Typography color="error" fontWeight={700}>ADOPTED</Typography>
               ) : (
                 <Button variant="contained" onClick={addToCart}>Add to cart</Button>
               )}
