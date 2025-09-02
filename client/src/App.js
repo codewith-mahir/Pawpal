@@ -24,7 +24,13 @@ import DonationHistory from './pages/DonationHistory';
 function PrivateRoute({ children, roles }) {
   const { user, loading } = useAuth();
   if (loading) return null; // or a spinner
-  if (!user) return <Navigate to="/login" />;
+  if (!user) {
+    // Remember last attempted path to restore after login
+    if (typeof window !== 'undefined') {
+      try { sessionStorage.setItem('lastPath', window.location.pathname + window.location.search); } catch {}
+    }
+    return <Navigate to="/login" />;
+  }
   const role = user.role === 'seller' ? 'host' : (user.role === 'customer' ? 'adopter' : user.role);
   if (roles && !roles.includes(role)) return <Navigate to="/products" />;
   return children;

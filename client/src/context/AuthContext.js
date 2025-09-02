@@ -8,8 +8,10 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('user');
-      if (saved) setUser(JSON.parse(saved));
+      const savedLocal = localStorage.getItem('user');
+      const savedSession = sessionStorage.getItem('user');
+      const source = savedLocal || savedSession;
+      if (source) setUser(JSON.parse(source));
     } catch {
       // ignore malformed storage
     } finally {
@@ -17,14 +19,22 @@ export function AuthProvider({ children }) {
     }
   }, []);
 
-  const login = (userData) => {
+  const login = (userData, remember = true) => {
     setUser(userData);
-    localStorage.setItem('user', JSON.stringify(userData));
+    const serialized = JSON.stringify(userData);
+    if (remember) {
+      localStorage.setItem('user', serialized);
+      sessionStorage.removeItem('user');
+    } else {
+      sessionStorage.setItem('user', serialized);
+      localStorage.removeItem('user');
+    }
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('user');
+    try { localStorage.removeItem('user'); } catch {}
+    try { sessionStorage.removeItem('user'); } catch {}
   };
 
   return (

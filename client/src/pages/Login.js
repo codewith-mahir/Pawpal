@@ -20,20 +20,19 @@ export default function Login() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { login } = useAuth();
+  const [remember, setRemember] = useState(true);
 
   const handleSubmit = async e => {
     e.preventDefault();
     try {
       const res = await axios.post('/auth/login', { email, password });
-      login({ ...res.data.user, token: res.data.token });
+  login({ ...res.data.user, token: res.data.token }, remember);
   toast.success(`Welcome back, ${res.data.user.name || res.data.user.email}!`);
 
-      if (res.data.user.role === 'admin') {
-        navigate('/admin');
-      } else {
-        // Redirect everyone else to home/products
-        navigate('/products');
-      }
+  const last = sessionStorage.getItem('lastPath');
+  sessionStorage.removeItem('lastPath');
+  if (res.data.user.role === 'admin') return navigate('/admin');
+  return navigate(last || '/products');
     } catch (err) {
   const msg = err.response?.data?.message || 'Login failed';
   setError(msg);
@@ -173,6 +172,11 @@ export default function Login() {
                   }
                 }
               }}
+            />
+
+            <FormControlLabel
+              control={<Checkbox checked={remember} onChange={(e) => setRemember(e.target.checked)} />}
+              label="Remember me"
             />
 
             <Button
